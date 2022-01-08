@@ -11,7 +11,7 @@ function init() {
 	scene.add(directionalLight);
 
 	const aspectRatio = window.innerWidth / window.innerHeight;
-	const cameraWidth = 150;
+	const cameraWidth = 200;
 	const cameraHeight = cameraWidth / aspectRatio;
 
 	const camera = new THREE.OrthographicCamera(
@@ -23,7 +23,7 @@ function init() {
 		1000 // far plane
 	);
 	camera.position.set(200, 200, 200);
-	camera.lookAt(0, 10, 0);
+	camera.lookAt(0, 0, 0);
 
 	const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 	renderer.setSize(window.innerWidth, window.innerHeight);
@@ -31,47 +31,48 @@ function init() {
 
 	document.body.appendChild(renderer.domElement);
 
-	function createWheels() {
-		const geometry = new THREE.CylinderGeometry(7, 7, 35, 32);
+	function createWing() {
+		const geometry = new THREE.BoxGeometry(15, 50, 2);
 		const material = new THREE.MeshStandardMaterial({ color: '#555' });
-		const cylinder = new THREE.Mesh(geometry, material);
-		return cylinder;
+		const box = new THREE.Mesh(geometry, material);
+		return box;
 	}
 
-	function createCar() {
-		const car = new THREE.Group();
-
-		const backWheel = createWheels();
-		backWheel.position.y = 6;
-		backWheel.position.x = -18;
-		backWheel.rotation.x = 1.57;
-		car.add(backWheel);
-
-		const frontWheel = createWheels();
-		frontWheel.position.y = 6;
-		frontWheel.position.x = 18;
-		frontWheel.rotation.x = 1.57;
-		car.add(frontWheel);
-
-		const main = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(60, 15, 30),
-			new THREE.MeshLambertMaterial({ color: '#34aa33' })
-		);
-		main.position.y = 12;
-		car.add(main);
-
-		const cabin = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(33, 12, 24),
-			new THREE.MeshLambertMaterial({ color: '#aaa' })
-		);
-		cabin.position.x = -6;
-		cabin.position.y = 25.5;
-		car.add(cabin);
-
-		return car;
+	function createHull() {
+		const geometry = new THREE.BoxGeometry(30, 20, 100, 1, 1, 1);
+		const material = new THREE.MeshStandardMaterial({ color: '#f58142' });
+		geometry.vertices[4].y -= 10;
+		geometry.vertices[1].y -= 10;
+		const box = new THREE.Mesh(geometry, material);
+		return box;
 	}
 
-	const car = createCar();
+	function createPlane() {
+		const plane = new THREE.Group();
+
+		const leftWing = createWing();
+		leftWing.position.y = -5;
+		leftWing.position.x = 15;
+		leftWing.position.z = 30;
+		leftWing.rotation.x = 1.57;
+
+		plane.add(leftWing);
+
+		const rightWing = createWing();
+		rightWing.position.y = -5;
+		rightWing.position.x = 15;
+		rightWing.position.z = -30;
+		rightWing.rotation.x = 1.57;
+		plane.add(rightWing);
+
+		const hull = createHull();
+		hull.rotation.y = 1.57;
+		plane.add(hull);
+
+		return plane;
+	}
+
+	const car = createPlane();
 	scene.add(car);
 
 	renderer.render(scene, camera);

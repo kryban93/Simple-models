@@ -1,8 +1,17 @@
-body {
+#body_one {
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
 	box-sizing: border-box;
 	margin: 0;
 	background: linear-gradient(to bottom, rgb(252, 239, 221), rgb(250, 246, 194));
+}
+
+#body_two {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin: 0;
+	background: linear-gradient(to bottom, rgb(238, 250, 217), rgb(145, 229, 255));
 }
