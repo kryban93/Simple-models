@@ -32,8 +32,10 @@ function init() {
 	document.body.appendChild(renderer.domElement);
 
 	function createWing() {
-		const geometry = new THREE.BoxGeometry(15, 50, 2);
+		const geometry = new THREE.BoxGeometry(30, 70, 2);
 		const material = new THREE.MeshStandardMaterial({ color: '#555' });
+		geometry.vertices[4].x -= -10;
+		geometry.vertices[5].x -= -10;
 		const box = new THREE.Mesh(geometry, material);
 		return box;
 	}
@@ -53,7 +55,7 @@ function init() {
 		const leftWing = createWing();
 		leftWing.position.y = -5;
 		leftWing.position.x = 15;
-		leftWing.position.z = 30;
+		leftWing.position.z = 40;
 		leftWing.rotation.x = 1.57;
 
 		plane.add(leftWing);
@@ -61,8 +63,9 @@ function init() {
 		const rightWing = createWing();
 		rightWing.position.y = -5;
 		rightWing.position.x = 15;
-		rightWing.position.z = -30;
+		rightWing.position.z = 40;
 		rightWing.rotation.x = 1.57;
+		rightWing.applyMatrix(new THREE.Matrix4().makeScale(1, 1, -1));
 		plane.add(rightWing);
 
 		const hull = createHull();
