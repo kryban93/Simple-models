@@ -44,7 +44,19 @@ function init() {
 		const geometry = new THREE.BoxGeometry(30, 20, 100, 1, 1, 1);
 		const material = new THREE.MeshStandardMaterial({ color: '#f58142' });
 		geometry.vertices[4].y -= 10;
+		geometry.vertices[4].x += 10;
 		geometry.vertices[1].y -= 10;
+		geometry.vertices[1].x -= 10;
+		geometry.vertices[6].y -= 10;
+		geometry.vertices[6].x += 10;
+
+		const box = new THREE.Mesh(geometry, material);
+		return box;
+	}
+
+	function createVerticalStabillizer() {
+		const geometry = new THREE.BoxGeometry(30, 70, 2);
+		const material = new THREE.MeshStandardMaterial({ color: '#f59992' });
 		const box = new THREE.Mesh(geometry, material);
 		return box;
 	}
@@ -65,12 +77,19 @@ function init() {
 		rightWing.position.x = 15;
 		rightWing.position.z = 40;
 		rightWing.rotation.x = 1.57;
-		rightWing.applyMatrix(new THREE.Matrix4().makeScale(1, 1, -1));
+		rightWing.applyMatrix4(new THREE.Matrix4().makeScale(1, 1, -1));
 		plane.add(rightWing);
 
 		const hull = createHull();
 		hull.rotation.y = 1.57;
 		plane.add(hull);
+
+		const verticalStabilizer = createVerticalStabillizer();
+		verticalStabilizer.position.y = 10;
+		verticalStabilizer.position.x = -40;
+		verticalStabilizer.position.z = 0;
+
+		plane.add(verticalStabilizer);
 
 		return plane;
 	}
