@@ -4,7 +4,7 @@ import * as THREE from 'https://threejs.org/build/three.module.js';
 import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
 import { createCar } from './createCar.js';
 
-var mesh, renderer, scene, camera, controls;
+let renderer, scene, camera, controls;
 
 init();
 animate();

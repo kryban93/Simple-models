@@ -1,8 +1,6 @@
-// Simple three.js example
-
-import * as THREE from 'https://threejs.org/build/three.module.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
-import { createPlane } from './createPlane.js';
 
 let renderer, scene, camera, controls;
 
@@ -18,28 +16,39 @@ function init() {
 	scene = new THREE.Scene();
 
 	camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
-	camera.position.set(200, 200, 200);
+	camera.position.set(10, 10, 10);
 
 	// controls
 	controls = new OrbitControls(camera, renderer.domElement);
 
 	scene.add(new THREE.AmbientLight(0x555555));
 
-	var light = new THREE.DirectionalLight(0xffffff, 1);
+	var light = new THREE.DirectionalLight(0xffffff, 4);
 	light.position.set(20, 20, 0);
 	scene.add(light);
 
 	scene.add(new THREE.AxesHelper(20)); // axes
 
-	const plane = createPlane();
+	const loader = new GLTFLoader();
 
-	scene.add(plane);
+	loader.load(
+		'./js/dog/dog.glb',
+		function (gltf) {
+			scene.add(gltf.scene);
+		},
+		undefined,
+		function (error) {
+			console.error(error);
+		}
+	);
 }
 
 function animate() {
 	requestAnimationFrame(animate);
-
-	//controls.update();
+	// cube.rotation.x += 0.01;
+	// cube.rotation.y += 0.01;
+	// secondCube.rotation.x -= 0.01;
+	// secondCube.rotation.y -= 0.01;
 
 	renderer.render(scene, camera);
 }
