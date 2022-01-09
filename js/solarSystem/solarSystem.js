@@ -22,21 +22,21 @@ function init() {
 	// controls
 	controls = new OrbitControls(camera, renderer.domElement);
 
-	scene.add(new THREE.AmbientLight(0x555555));
+	scene.add(new THREE.AmbientLight(0xffffff));
 
 	var light = new THREE.PointLight(0xffffff, 2);
 	scene.add(light);
 
-	const sun = createPlanet(16, 16, 16, '#f2e93f');
+	const sun = createPlanet(16, 16, 16, '#fcba03');
 	scene.add(sun);
 	objectsToRotate.push(sun);
 
-	const earth = createPlanet(4, 16, 16, '#3f60f2');
+	const earth = createPlanet(4, 16, 16, '#0a038f');
 	earth.position.x = 50;
 	sun.add(earth);
 	objectsToRotate.push(earth);
 
-	const moon = createPlanet(2, 16, 16, '0x555555');
+	const moon = createPlanet(2, 16, 16, '#141414');
 	moon.position.x = 10;
 	earth.add(moon);
 	objectsToRotate.push(moon);
